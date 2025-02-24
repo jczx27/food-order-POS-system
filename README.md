@@ -1,38 +1,75 @@
-## FeedMe Software Engineer Take Home Assignment
-Below is a take home assignment before the interview of the position. You are required to
-1. Understand the situation and use case. You may contact the interviewer for further clarification.
-2. Fork this repo and implement the requirement with your most familiar tools.
-3. Complete the requirement and perform your own testing.
-4. Provide documentation for the any part that you think is needed.
-5. Commit into your own github and share your repo with the interviewer.
-6. Bring the source code and functioning prototype to the interview session.
+# Take Home Assignment Guide
 
-### Situation
-McDonald is transforming their business during COVID-19. They wish to build the automated cooking bots to reduce workforce and increase their efficiency. As one of the software engineer in the project. You task is to create an order controller which handle the order control flow. 
+> [!NOTE]
+> This project is monorepo worked on Visual Studio Code consisting of `Reactjs` and `Nodejs + ExpressJs` and is meant to be presented using UI Application
 
-### User Story
-As below is part of the user story:
-1. As McDonald's normal customer, after I submitted my order, I wish to see my order flow into "PENDING" area. After the cooking bot process my order, I want to see it flow into to "COMPLETE" area.
-2. As McDonald's VIP member, after I submitted my order, I want my order being process first before all order by normal customer.  However if there's existing order from VIP member, my order should queue behind his/her order.
-3. As McDonald's manager, I want to increase or decrease number of cooking bot available in my restaurant. When I increase a bot, it should immediately process any pending order. When I decrease a bot, the processing order should remain un-process.
-4. As McDonald bot, it can only pickup and process 1 order at a time, each order required 10 seconds to complete process.
+> [!TIP]
+> You might need 2 terminals to run this project.
 
-### Requirements
-1. When "New Normal Order" clicked, a new order should show up "PENDING" Area.
-2. When "New VIP Order" clicked, a new order should show up in "PENDING" Area. It should place in-front of all existing "Normal" order but behind of all existing "VIP" order.
-3. The order number should be unique and increasing.
-4. When "+ Bot" clicked, a bot should be created and start processing the order inside "PENDING" area. after 10 seconds picking up the order, the order should move to "COMPLETE" area. Then the bot should start processing another order if there is any left in "PENDING" area.
-5. If there is no more order in the "PENDING" area, the bot should become IDLE until a new order come in.
-6. When "- Bot" clicked, the newest bot should be destroyed. If the bot is processing an order, it should also stop the process. The order now back to "PENDING" and ready to process by other bot.
-7. No data persistance is needed for this prototype, you may perform all the process inside memory.
+## Setup
 
-### Functioning Prototype
-You may demostrate your final funtioning prototype with **one and only one** of the following method:
-- CLI application
-- UI application
-- E2E test case
+### Nodejs
 
-### Tips on completing this task
-- Testing, testing and testing. Make sure the prototype is functioning and meeting all the requirements.
-- Do not over engineering. Try to scope your working hour within 3 hours (1 hour per day). You may document all the optimization or technology concern that you think good to bring in the solution.
-- Complete the implementation as clean as possible, clean code is a strong plus point, do not bring in all the fancy tech stuff.
+You may check your Node.js existance by running the command on your terminal/CMD
+
+> node -v
+
+then
+
+> npm -v
+
+> [!TIP]
+> If you haven't so, you may head to [their official website](https://nodejs.org/en/download/)
+
+Navigate to folders `backend` and `frontend` (you may use 1 terminal each), run the following at both
+
+> npm install
+
+### Starting the project
+
+Once you have the [setup](#setup) done, at both terminal locating at `backend` and `frontend` folder, run the following
+
+> npm run start
+
+At `frontend`, you should see the lines similar to:
+<br/>
+
+```
+Compiled successfully!
+You can now view frontend in the browser.
+  Local:            http://localhost:3000
+  On Your Network:  http://10.10.10.22:3000
+Note that the development build is not optimized.
+To create a production build, use npm run build.
+```
+
+While at `backend`, you should see lines similar to:
+
+```
+> backend@1.0.0 start
+> nodemon app.js
+[nodemon] 3.1.9
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,cjs,json
+[nodemon] starting `node app.js`
+Server is running on http://localhost:5000
+```
+
+Once you see both messages above, that means the project is successfully running.
+You may navigate to browser of your choice and go to http://localhost:3000.
+You should see the interface like below
+![sample-interface](./assets/sampleView.png)
+
+There we can start operating with the website.
+
+## Points
+
+> [!WARNING]
+> No persistent Data is used in this project, once the backend restarts, all progress will be lost.
+
+In the project, as it is a combination of front and backend, according to the requirement of [assignment question](ASSIGNMENT-QUESTION.md#user-story), the bots can only pickup and process an order a time and the order should be processed finished in 10 seconds if no reduction of bot involves that bot. To fetch the data periodically, `setInterval` is been used along with function to fetch data time over time.
+
+Whilst in backend, for bot to process order in 10 seconds, it is considered conditional timeout, hence `setTimeout` is been used as in certain conditions, the bot does not need to process further order or to terminate current process.
+
+This project also takes measure of deleted bot that has a currently processing order, the result would be the bot be removed whilst processing order will return to pending orders, but located priortized of it's kind.
