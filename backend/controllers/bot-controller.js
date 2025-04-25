@@ -1,7 +1,7 @@
 const { bots, createBot, removeBot } = require("@models/bot-model");
 
 const addBot = (req, res) => {
-  createBot();
+  createBot(req.body);
   res.status(201).json({ message: "Bot added successfully" });
 };
 

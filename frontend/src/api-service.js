@@ -38,9 +38,11 @@ export const addOrder = async (orderType) => {
   }
 };
 
-export const addBot = async () => {
+export const addBot = async (botType) => {
   try {
-    const response = await axios.post(`${API_URL}/bot`);
+    const response = await axios.post(`${API_URL}/bot`, {
+      botType,
+    });
     if (response.data) {
       return response.data;
     }

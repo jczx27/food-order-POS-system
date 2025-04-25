@@ -14,7 +14,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 const App = () => {
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState({
+    pending_orders: [],
+    completed_orders: [],
+  });
   const [bots, setBots] = useState([]);
 
   const refreshData = async () => {

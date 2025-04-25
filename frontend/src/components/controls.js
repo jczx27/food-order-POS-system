@@ -33,11 +33,23 @@ const Controls = ({ onAddOrder, onAddBot, onRemoveBot, refreshData }) => (
         <Button
           variant="success"
           onClick={async () => {
-            await onAddBot();
+            await onAddBot("normal");
             await refreshData();
           }}
         >
           + Bot
+        </Button>
+      </Col>
+      <Col>
+        {" "}
+        <Button
+          variant="warning"
+          onClick={async () => {
+            await onAddBot("fast");
+            await refreshData();
+          }}
+        >
+          + Faster Bot
         </Button>
       </Col>
       <Col>
